@@ -16,11 +16,11 @@
 ** limitations under the License.
 */
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
-    <!-- ADB over network -->
-    <string name="adb_net_active_notification_title">ADB over network enabled</string>
-    <string name="adb_both_active_notification_title">ADB over USB &amp; network enabled</string>
-    <string name="adb_active_generic_notification_message">Touch to disable debugging.</string>
+  <!-- ADB notification -->
+  <java-symbol type="string" name="adb_net_active_notification_title" />
+  <java-symbol type="string" name="adb_both_active_notification_title" />
+  <java-symbol type="string" name="adb_active_generic_notification_message" />
 
 </resources>

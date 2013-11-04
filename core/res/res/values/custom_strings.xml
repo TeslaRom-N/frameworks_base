@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
-**
 ** Copyright 2006, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +18,10 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Vendor mismatched fingerprint warning [CHAR LIMIT=NONE] -->
-    <string name="system_error_vendorprint">Your vendor image does not match the system. Please flash the <xliff:g id="string">%s</xliff:g> vendor image for your device</string>
+    <!-- ADB over network -->
+    <string name="adb_net_active_notification_title">ADB over network enabled</string>
+    <string name="adb_both_active_notification_title">ADB over USB &amp; network enabled</string>
+    <string name="adb_active_generic_notification_message">Touch to disable debugging.</string>
 
     <!-- power key as shutter -->
     <string name="permlab_preventpower">override power key</string>

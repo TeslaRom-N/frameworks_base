@@ -3903,6 +3903,13 @@ public final class Settings {
                 "volume_keys_control_media_stream";
 
         /**
+         * Whether to mute annoying notifications
+         * @hide
+         */
+        public static final String MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD =
+                "mute_annoying_notifications_threshold";
+
+        /**
          * Whether the phone ringtone should be played in an increasing manner
          * @hide
          */

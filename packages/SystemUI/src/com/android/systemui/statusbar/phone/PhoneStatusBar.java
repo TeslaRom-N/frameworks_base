@@ -1197,6 +1197,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         addGestureAnywhereView();
+        addAppCircleSidebar();
 
         mAssistManager = SystemUIFactory.getInstance().createAssistManager(this, context);
 

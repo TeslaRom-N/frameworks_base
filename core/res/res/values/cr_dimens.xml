@@ -26,4 +26,10 @@
     <!-- EdgeGesture service: Thickness of the active trigger fields around the screen border -->
     <dimen name="edge_gesture_trigger_thickness">15dp</dimen>
 
+    <!-- App circle sidebar -->
+    <dimen name="app_sidebar_trigger_width">12dip</dimen>
+    <dimen name="app_sidebar_listview_width">160dp</dimen>
+    <dimen name="app_sidebar_icon_width">72dp</dimen>
+    <dimen name="app_sidebar_icon_height">72dp</dimen>
+
 </resources>

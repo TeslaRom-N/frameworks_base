@@ -2693,6 +2693,9 @@
     <!-- Package name for the device provisioning package. -->
     <string name="config_deviceProvisioningPackage"></string>
 
+    <!-- Sets whether IME switcher on statusbar should be shown or not. -->
+	<bool name="config_show_IMESwitcher">true</bool>
+
     <!-- Colon separated list of package names that should be granted DND access -->
     <string name="config_defaultDndAccessPackages" translatable="false">com.android.camera2</string>
 

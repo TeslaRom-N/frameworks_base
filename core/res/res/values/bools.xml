@@ -30,4 +30,7 @@
          <p>The main purpose is for OEMs to customize the rendering of the
          lockscreen, setting this to true should come with customized drawables. -->
     <bool name="use_lock_pattern_drawable">false</bool>
+
+    <!-- Whether to enable auto connection feature -->
+    <bool name="wifi_autocon">false</bool>
 </resources>

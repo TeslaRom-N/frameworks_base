@@ -2611,6 +2611,9 @@
   <java-symbol type="string" name="android_upgrading_notification_title" />
   <java-symbol type="string" name="android_upgrading_notification_body" />
 
+  <!-- for wifi auto connection -->
+  <java-symbol type="bool" name="wifi_autocon" />
+  
   <java-symbol type="string" name="usb_mtp_launch_notification_title" />
   <java-symbol type="string" name="usb_mtp_launch_notification_description" />
 

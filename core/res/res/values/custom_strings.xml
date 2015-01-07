@@ -52,4 +52,8 @@
 
     <!-- label for item that reboots the phone in phone options dialog -->
     <string name="global_action_reboot">Reboot</string>
+
+    <!-- screenshot in the power menu -->
+    <string name="powermenu_screenshot">Screenshot</string>
+
 </resources>

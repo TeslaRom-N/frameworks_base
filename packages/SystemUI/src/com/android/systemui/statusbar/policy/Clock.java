@@ -190,6 +190,14 @@ public class Clock extends TextView implements DemoMode {
 
         SimpleDateFormat sdf;
         String format = is24 ? d.timeFormat_Hm : d.timeFormat_hm;
+
+        // replace seconds directly in format, not in result
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CLOCK_USE_SECOND, 0) == 1) {
+            String temp = format;
+            format = temp.replaceFirst("mm","mm:ss");
+        }
+
         if (!format.equals(mClockFormatString)) {
             mContentDescriptionFormat = new SimpleDateFormat(format);
             /*
@@ -233,11 +241,6 @@ public class Clock extends TextView implements DemoMode {
         String result = "";
         String timeResult = sdf.format(mCalendar.getTime());
         String dateResult = "";
-
-        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_USE_SECOND, 0) == 1) {
-            String temp = result;
-            result = String.format("%s:%02d", temp, new GregorianCalendar().get(Calendar.SECOND));
-        }
 
         if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
             Date now = new Date();

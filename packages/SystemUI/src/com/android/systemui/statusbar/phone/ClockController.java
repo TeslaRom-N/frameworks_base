@@ -29,12 +29,7 @@ public class ClockController {
     public static final int STYLE_CLOCK_LEFT    = 3;
 
     public static final int DEFAULT_ICON_TINT = Color.WHITE;
-
-    public static final int FONT_BOLD = 0;
-    public static final int FONT_CONDENSED = 1;
-    public static final int FONT_LIGHT = 2;
-    public static final int FONT_LIGHT_ITALIC = 3;
-    public static final int FONT_NORMAL = 4;
+    public static final int FONT_NORMAL = 0;
 
     private final IconMerger mNotificationIcons;
     private final Context mContext;
@@ -46,7 +41,7 @@ public class ClockController {
     private int mClockDateStyle;
     private int mClockDateDisplay;
     private int mClockDatePosition;
-    protected int mClockFontStyle = FONT_NORMAL;
+    private int mClockFontStyle = FONT_NORMAL;
     private int mIconTint = DEFAULT_ICON_TINT;
     private final Rect mTintArea = new Rect();
     private final Handler handler = new Handler();

@@ -6129,6 +6129,12 @@ public final class Settings {
                 INCALL_POWER_BUTTON_BEHAVIOR_SCREEN_OFF;
 
         /**
+         * Whether to include options in power menu for rebooting into recovery and bootloader
+         * @hide
+         */
+        public static final String ADVANCED_REBOOT = "advanced_reboot";
+
+        /**
          * Whether the device should wake when the wake gesture sensor detects motion.
          * @hide
          */
@@ -6637,6 +6643,7 @@ public final class Settings {
             CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
             SYSTEM_NAVIGATION_KEYS_ENABLED,
             QS_TILES,
+            ADVANCED_REBOOT,
         };
 
         /**

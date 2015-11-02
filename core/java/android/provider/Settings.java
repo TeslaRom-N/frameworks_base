@@ -3923,6 +3923,13 @@ public final class Settings {
         public static final String CALL_FLIP_ACTION_KEY = "call_flip_action_key";
 
         /**
+         * Volume key controls ringtone or media sound stream
+         * @hide
+         */
+        public static final String VOLUME_KEYS_CONTROL_MEDIA_STREAM =
+                "volume_keys_control_media_stream";
+
+        /**
          * Whether the phone ringtone should be played in an increasing manner
          * @hide
          */

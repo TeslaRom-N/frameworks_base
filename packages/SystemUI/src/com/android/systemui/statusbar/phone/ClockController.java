@@ -16,6 +16,7 @@ import com.android.systemui.statusbar.policy.Clock;
 import java.util.GregorianCalendar;
 import java.util.Timer;
 import java.util.TimerTask;
+import android.graphics.Typeface;
 
 /**
  * To control your...clock
@@ -29,6 +30,12 @@ public class ClockController {
 
     public static final int DEFAULT_ICON_TINT = Color.WHITE;
 
+    public static final int FONT_BOLD = 0;
+    public static final int FONT_CONDENSED = 1;
+    public static final int FONT_LIGHT = 2;
+    public static final int FONT_LIGHT_ITALIC = 3;
+    public static final int FONT_NORMAL = 4;
+
     private final IconMerger mNotificationIcons;
     private final Context mContext;
     private final SettingsObserver mSettingsObserver;
@@ -39,6 +46,7 @@ public class ClockController {
     private int mClockDateStyle;
     private int mClockDateDisplay;
     private int mClockDatePosition;
+    protected int mClockFontStyle = FONT_NORMAL;
     private int mIconTint = DEFAULT_ICON_TINT;
     private final Rect mTintArea = new Rect();
     private final Handler handler = new Handler();
@@ -69,6 +77,9 @@ public class ClockController {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_CLOCK_DATE_POSITION),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUSBAR_CLOCK_FONT_STYLE), false,
+                    mSettingsObserver);
             updateSettings();
         }
 
@@ -119,6 +130,7 @@ public class ClockController {
         }
 
         mActiveClock = getClockForCurrentLocation();
+        mActiveClock.getFontStyle(mClockFontStyle);
         mActiveClock.setVisibility(View.VISIBLE);
         mActiveClock.setAmPmStyle(mAmPmStyle);
         mActiveClock.setClockDateDisplay(mClockDateDisplay);
@@ -146,6 +158,8 @@ public class ClockController {
                 UserHandle.USER_CURRENT);
         mClockDatePosition = Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.STATUSBAR_CLOCK_DATE_POSITION, 0);
+        mClockFontStyle = Settings.System.getInt(resolver,
+                Settings.System.STATUSBAR_CLOCK_FONT_STYLE, FONT_NORMAL);
 
         second = new TimerTask()
         {

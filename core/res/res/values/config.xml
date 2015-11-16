@@ -2091,6 +2091,10 @@
          "bugreport" = Take bug report, if available
          "silent" = silent mode
          "users" = list of users
+         "dnd" = dnd modes
+         "torch" = torch
+         "screenshot"
+         "screenrecord"
          -->
     <string-array translatable="false" name="config_globalActionsList">
         <item>power</item>
@@ -2100,6 +2104,7 @@
         <item>settings</item>
         <item>lockdown</item>
         <item>users</item>
+        <item>dnd</item>
         <item>silent</item>
     </string-array>
 

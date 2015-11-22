@@ -615,6 +615,17 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(chromiumPackage, STORAGE_PERMISSIONS, userId);
             }
 
+            // Project Fi
+            PackageParser.Package fiPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.apps.tycho", userId);
+            if (fiPackage != null) {
+                grantRuntimePermissionsLPw(fiPackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(fiPackage, PHONE_PERMISSIONS, userId);
+		grantRuntimePermissionsLPw(fiPackage, MICROPHONE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(fiPackage, LOCATION_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(fiPackage, SMS_PERMISSIONS, userId);
+            }
+
             mService.mSettings.onDefaultRuntimePermissionsGrantedLPr(userId);
 
             // Google Account

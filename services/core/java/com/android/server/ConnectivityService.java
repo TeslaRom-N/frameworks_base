@@ -245,6 +245,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkPolicyManager mPolicyManager;
 
     private String mCurrentTcpBufferSizes;
+    private int mCurrentTcpDelayedAckSegments;
+    private int mCurrentTcpUserCfg;
 
     private static final int ENABLED  = 1;
     private static final int DISABLED = 0;
@@ -1880,6 +1882,34 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    private void updateTcpDelayedAck(NetworkAgentInfo nai) {
+        if (isDefaultNetwork(nai) == false) {
+            return;
+        }
+
+        int segments = nai.linkProperties.getTcpDelayedAckSegments();
+        int usercfg = nai.linkProperties.getTcpUserCfg();
+
+        if (segments != mCurrentTcpDelayedAckSegments) {
+            try {
+                FileUtils.stringToFile("/sys/kernel/ipv4/tcp_delack_seg",
+                        String.valueOf(segments));
+                mCurrentTcpDelayedAckSegments = segments;
+            } catch (IOException e) {
+                // optional
+            }
+        }
+
+        if (usercfg != mCurrentTcpUserCfg) {
+            try {
+                FileUtils.stringToFile("/sys/kernel/ipv4/tcp_use_usercfg",
+                        String.valueOf(usercfg));
+                mCurrentTcpUserCfg = usercfg;
+            } catch (IOException e) {
+                // optional
+            }
+        }
+    }
     private void flushVmDnsCache() {
         /*
          * Tell the VMs to toss their DNS caches
@@ -4431,6 +4461,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 //            updateMtu(lp, null);
 //        }
         updateTcpBufferSizes(networkAgent);
+        updateTcpDelayedAck(networkAgent);
 
         updateRoutes(newLp, oldLp, netId);
         updateDnses(newLp, oldLp, netId);
@@ -4747,6 +4778,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         notifyLockdownVpn(newNetwork);
         handleApplyDefaultProxy(newNetwork.linkProperties.getHttpProxy());
         updateTcpBufferSizes(newNetwork);
+        updateTcpDelayedAck(newNetwork);
         setDefaultDnsSystemProperties(newNetwork.linkProperties.getDnsServers());
     }
 

@@ -2775,4 +2775,5 @@
   <java-symbol type="integer" name="power_key_hits_emergency" />
   <java-symbol type="bool" name="config_emergencyCallOnPowerkeyTapGestureEnabled" />
 
+  <java-symbol type="bool" name="config_passpoint_setting_on" />
 </resources>

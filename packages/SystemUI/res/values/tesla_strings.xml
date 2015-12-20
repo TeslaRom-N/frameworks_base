@@ -70,9 +70,14 @@
     <!-- Screen off QS Tile  -->
     <string name="quick_settings_screen_off_label">Screen off</string>
     <string name="accessibility_quick_settings_screen_off">Screen off.</string>
+
     <!-- Screenshot QS Tile -->
     <string name="quick_settings_screenshot_label">Screenshot</string>
     <string name="quick_settings_region_screenshot_label">Partial screenshot</string>
+
+    <!-- Screenrecord QS tile -->
+    <string name="quick_settings_screenrecord">Screenrecord</string>
+    <string name="quick_settings_screenrecord_on">Recording ...</string>
 
     <!-- Pie QS Tile -->
     <string name="quick_settings_pie_label">Pie</string>

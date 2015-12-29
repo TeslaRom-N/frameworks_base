@@ -45,7 +45,10 @@ import com.android.systemui.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TimeZone;
 
 /**
@@ -79,6 +82,9 @@ public class Clock extends TextView implements DemoMode {
     private int mClockDateStyle = CLOCK_DATE_STYLE_REGULAR;
     private int mAmPmStyle = AM_PM_STYLE_GONE;
     private int mClockDatePosition = STYLE_DATE_LEFT;
+
+    private final Handler handler = new Handler();
+    TimerTask second;
 
     public Clock(Context context) {
         this(context, null);
@@ -211,6 +217,11 @@ public class Clock extends TextView implements DemoMode {
         String result = "";
         String timeResult = sdf.format(mCalendar.getTime());
         String dateResult = "";
+
+        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_USE_SECOND, 0) == 1) {
+            String temp = result;
+            result = String.format("%s:%02d", temp, new GregorianCalendar().get(Calendar.SECOND));
+        }
 
         if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
             Date now = new Date();

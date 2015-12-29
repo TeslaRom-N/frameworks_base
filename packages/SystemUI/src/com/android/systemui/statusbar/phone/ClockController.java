@@ -13,6 +13,9 @@ import android.provider.Settings;
 import android.view.View;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.Clock;
+import java.util.GregorianCalendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * To control your...clock
@@ -38,6 +41,8 @@ public class ClockController {
     private int mClockDatePosition;
     private int mIconTint = DEFAULT_ICON_TINT;
     private final Rect mTintArea = new Rect();
+    private final Handler handler = new Handler();
+    TimerTask second;
 
     class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
@@ -141,6 +146,25 @@ public class ClockController {
                 UserHandle.USER_CURRENT);
         mClockDatePosition = Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.STATUSBAR_CLOCK_DATE_POSITION, 0);
+
+        second = new TimerTask()
+        {
+            @Override
+            public void run()
+             {
+                Runnable updater = new Runnable()
+                  {
+                   public void run()
+                   {
+                       updateActiveClock();
+                   }
+                  };
+                handler.post(updater);
+             }
+        };
+        Timer timer = new Timer();
+        timer.schedule(second, 0, 1001);
+
         updateActiveClock();
     }
 

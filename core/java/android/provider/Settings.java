@@ -3878,6 +3878,12 @@ public final class Settings {
                 "lockscreen_shortcuts_longpress";
 
         /**
+         * Whether to show Brightness Icon On Brightness Slider
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_ICON = "qs_show_brightness_icon";
+
+        /**
          * Whether the proximity sensor will adjust call to speaker
          * @hide
          */

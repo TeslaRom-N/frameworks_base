@@ -64,4 +64,7 @@
     <string name="accessibility_quick_settings_nfc_changed_off">NFC turned off.</string>
     <string name="accessibility_quick_settings_nfc_changed_on">NFC turned on.</string>
 
+    <!-- IME selector QS tile -->
+    <string name="quick_settings_ime_label">IME</string>
+
 </resources>

@@ -2683,6 +2683,9 @@
     <string name="config_networkOverLimitComponent" translatable="false">com.android.systemui/com.android.systemui.net.NetworkOverLimitActivity</string>
     <string name="config_dataUsageSummaryComponent" translatable="false">com.android.settings/com.android.settings.Settings$DataUsageSummaryActivity</string>
 
+    <!-- Configuartion to support SIM contact batch operation.-->
+    <bool name="config_sim_phonebook_batch_operation">true</bool>
+
     <!-- A array of regex to treat a SMS as VVM SMS if the message body matches.
          Each item represents an entry, which consists of two parts:
          a comma (,) separated list of MCCMNC the regex applies to, followed by a semicolon (;), and

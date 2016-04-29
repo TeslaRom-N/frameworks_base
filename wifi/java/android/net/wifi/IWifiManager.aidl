@@ -171,5 +171,7 @@ interface IWifiManager
     void factoryReset();
 
     Network getCurrentNetwork();
+
+    boolean getWifiStaSapConcurrency();
 }
 

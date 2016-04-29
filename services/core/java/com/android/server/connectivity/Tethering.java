@@ -269,6 +269,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
         // Never called directly: only called from interfaceLinkStateChanged.
         // See NetlinkHandler.cpp:71.
         if (VDBG) Log.d(TAG, "interfaceStatusChanged " + iface + ", " + up);
+        WifiManager mWifiManager =
+           (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         synchronized (mPublicSync) {
             int interfaceType = ifaceNameToType(iface);
             if (interfaceType == ConnectivityManager.TETHERING_INVALID) {
@@ -291,6 +293,25 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
                     // Similarly, ignore interface down for WiFi.  We monitor WiFi AP status
                     // through the WifiManager.WIFI_AP_STATE_CHANGED_ACTION intent.
                     if (VDBG) Log.d(TAG, "ignore interface down for " + iface);
+                } else if (isWifi(iface) && (mWifiManager != null) &&
+                              mWifiManager.getWifiStaSapConcurrency()) {
+                    int wifiApState = 0;
+                    wifiApState = mWifiManager.getWifiApState();
+
+                    // Ignore AP interface down after enabling STA connection.
+                    // If STA connects to same  band the SAP is enabled, the
+                    // driver stops SAP before it proceeds for STA connection
+                    // hence ignore interface down. After STA connection,
+                    // driver starts SAP on STA channel.
+
+                    if ((wifiApState == WifiManager.WIFI_AP_STATE_DISABLING) ||
+                       (wifiApState == WifiManager.WIFI_AP_STATE_DISABLED)) {
+                        if (VDBG) Log.d(TAG, "Got interface down for " + iface);
+                        sm.sendMessage(TetherInterfaceSM.CMD_INTERFACE_DOWN);
+                        mIfaces.remove(iface);
+                    } else {
+                        if (VDBG) Log.d(TAG, "ignore interface down for " + iface);
+                    }
                 }
             }
         }

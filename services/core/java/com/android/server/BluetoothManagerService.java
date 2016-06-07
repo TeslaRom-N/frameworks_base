@@ -39,6 +39,7 @@ import android.content.ServiceConnection;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.ContentObserver;
 import android.os.Binder;
 import android.os.Build;
@@ -63,6 +64,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import android.app.AppOpsManager;
+import android.os.SystemProperties;
 
 
 class BluetoothManagerService extends IBluetoothManager.Stub {
@@ -724,6 +727,21 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                     && startConsentUiIfNeeded(packageName, callingUid,
                             BluetoothAdapter.ACTION_REQUEST_ENABLE)) {
                 return false;
+            }
+        }
+
+        if(isStrictOpEnable()){
+            AppOpsManager mAppOpsManager = mContext.getSystemService(AppOpsManager.class);
+            String packageName = mContext.getPackageManager().getNameForUid(Binder.getCallingUid());
+
+            if ((Binder.getCallingUid() > 10000)
+                    && (packageName.indexOf("android.uid.systemui") != 0)
+                    && (packageName.indexOf("android.uid.system") != 0)) {
+                int result = mAppOpsManager.noteOp(AppOpsManager.OP_BLUETOOTH_ADMIN,
+                        Binder.getCallingUid(), packageName);
+                if (result == AppOpsManager.MODE_IGNORED) {
+                    return false;
+                }
             }
         }
 

@@ -711,6 +711,11 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
             } else {
                 /* We now have a status bar icon for WifiTethering, so drop the notification */
                 clearTetheredNotification();
+                if (mContext.getResources().getBoolean(
+                        com.android.internal.R.bool
+                        .config_regional_hotspot_show_notification_when_turn_on)) {
+                    showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_wifi);
+                }
             }
         } else if (bluetoothTethered) {
             showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_bluetooth);

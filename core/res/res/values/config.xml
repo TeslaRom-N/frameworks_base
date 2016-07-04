@@ -2598,4 +2598,11 @@
     <bool name="config_regional_hotspot_show_notification_when_turn_on">false</bool>
 
     <bool name="config_passpoint_setting_on">false</bool>
+
+    <!-- Zero Balance redirect URL config -->
+    <string name="operator_config_url" translatable="false"></string>
+    <!-- Zero Balance ping URL config -->
+    <string name="operator_ping_url" translatable="false"></string>
+    <!-- Zero Balance feature enable config -->
+    <bool name="config_zero_balance_operator">false</bool>
 </resources>

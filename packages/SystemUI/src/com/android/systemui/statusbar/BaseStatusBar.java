@@ -2421,7 +2421,9 @@ public abstract class BaseStatusBar extends SystemUI implements
                         + notification);
             }
         }
-        updateHeadsUp(key, entry, shouldPeek, alertAgain);
+        if (mUseHeadsUp) {
+            updateHeadsUp(key, entry, shouldPeek, alertAgain);
+        }
         updateNotifications();
 
         if (!notification.isClearable()) {

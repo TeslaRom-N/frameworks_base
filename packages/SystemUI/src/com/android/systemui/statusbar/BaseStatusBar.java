@@ -2406,7 +2406,9 @@ public abstract class BaseStatusBar extends SystemUI implements
             entry.icon.set(ic);
             inflateViews(entry, mStackScroller);
         }
-        updateHeadsUp(key, entry, shouldPeek, alertAgain);
+        if (mUseHeadsUp) {
+            updateHeadsUp(key, entry, shouldPeek, alertAgain);
+        }
         updateNotifications();
 
         // Update the veto button accordingly (and as a result, whether this row is

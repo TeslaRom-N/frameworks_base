@@ -46,4 +46,7 @@
     <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
     <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
 
+    <!-- Navbar tuner -->
+    <string name="navbar_tuner_title">Navbar tuner</string>
+
 </resources>

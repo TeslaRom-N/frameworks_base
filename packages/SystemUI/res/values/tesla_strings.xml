@@ -21,4 +21,7 @@
     <!-- Screenshot Delete Toast -->
     <string name="delete_screenshot_toast">Screenshot deleted</string>
 
+    <!-- Navbar tuner -->
+    <string name="navbar_tuner_title">Navbar tuner</string>
+
 </resources>

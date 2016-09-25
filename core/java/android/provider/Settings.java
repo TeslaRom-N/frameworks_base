@@ -3822,6 +3822,12 @@ public final class Settings {
                 "lockscreen_shortcuts_longpress";
 
         /**
+         * Whether to allow one finger quick settings expansion on the left or right side of the statusbar.
+         * @hide
+         */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+
+        /**
          * Whether to display sound panel in the power menu
          *
          * @hide

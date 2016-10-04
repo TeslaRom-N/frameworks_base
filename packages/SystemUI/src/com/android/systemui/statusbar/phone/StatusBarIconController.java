@@ -146,7 +146,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mHandler = new Handler();
         mClockController = new ClockController(statusBar, mNotificationIcons, mHandler);
         mCenterClockLayout = statusBar.findViewById(R.id.center_clock_layout);
-        defineSlots();
         loadDimens();
 
         TunerService.get(mContext).addTunable(this, ICON_BLACKLIST);

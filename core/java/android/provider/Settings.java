@@ -6889,7 +6889,7 @@ public final class Settings {
             INCALL_POWER_BUTTON_BEHAVIOR,
             WIFI_DISCONNECT_DELAY_DURATION,
             ADVANCED_REBOOT,
-            QS_TILES,
+            QS_TILES
         };
 
         /**

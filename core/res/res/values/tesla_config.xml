@@ -37,4 +37,7 @@
     needs to be set to false, to prevent the doze notifications from being light -->
     <bool name="config_invert_colors_on_doze">true</bool>
 
+    <!-- Bool whether to show Hardware keys settings in TeslaCoil -->
+    <bool name="config_showHwKeys">false</bool>
+
 </resources>

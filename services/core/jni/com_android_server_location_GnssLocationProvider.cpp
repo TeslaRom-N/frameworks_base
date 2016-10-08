@@ -191,11 +191,19 @@ static void sv_status_callback(GpsSvStatus* sv_status)
     checkAndClearExceptionFromCallback(env, __FUNCTION__);
 }
 
+#ifdef SOURCE_GPS_HAX
+static void gnss_sv_status_callback(QcomGnssSvStatus* sv_status) {
+#else
 static void gnss_sv_status_callback(GnssSvStatus* sv_status) {
+#endif
     JNIEnv* env = AndroidRuntime::getJNIEnv();
     size_t status_size = sv_status->size;
     // Check the size, and reject the object that has invalid size.
+#ifdef SOURCE_GPS_HAX
+    if (status_size != sizeof(QcomGnssSvStatus)) {
+#else
     if (status_size != sizeof(GnssSvStatus)) {
+#endif
         ALOGE("Invalid size of GnssSvStatus found: %zd.", status_size);
         return;
     }

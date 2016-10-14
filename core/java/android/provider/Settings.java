@@ -4021,6 +4021,13 @@ public final class Settings {
         public static final String ANIM_TILE_INTERPOLATOR = "anim_tile_interpolator";
 
         /**
+         * Whether to display set of animations when prompting the power menu
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
+
+        /**
          * Defines the shortcuts to be shown on lockscreen
          * Usage is like this: target:icon|target:icon|target:icon
          * if :icon is not set, default application icon will be used

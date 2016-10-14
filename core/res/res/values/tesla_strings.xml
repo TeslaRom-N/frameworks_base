@@ -62,6 +62,6 @@
     <string name="battery_style_default">Default</string>
     <string name="battery_style_meter_horizontal">Horizontal bar</string>
     <string name="battery_style_circle">Circle</string>
-    <string name="battery_style_droid">Droid</string>
+    <string name="battery_style_droid">TeslaCoil</string>
 
 </resources>

@@ -29,7 +29,6 @@ import android.app.StatusBarManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -399,10 +398,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // last value sent to window manager
     private int mLastDispatchedSystemUiVisibility = ~View.SYSTEM_UI_FLAG_VISIBLE;
 
-    // to handle navbar toggle
-    private boolean doShowNavbar = false;
-    private boolean mNavigationBarAttached = false;
-
     DisplayMetrics mDisplayMetrics = new DisplayMetrics();
 
     // XXX: gesture research
@@ -485,9 +480,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.NAVIGATION_BAR_VISIBLE),
-                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -502,9 +494,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE))) {
                 updateQSRowsColumnsLandscape();
-            } else if (uri.equals(Settings.Secure.getUriFor(
-                    Settings.Secure.NAVIGATION_BAR_VISIBLE))) {
-                updateNavigationBarVisibility();
             }
         }
     }
@@ -720,7 +709,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
 
-        updateNavigationBarVisibility();
+        addNavigationBar();
 
         // Status bar settings observer
         SettingsObserver observer = new SettingsObserver(mHandler);
@@ -818,8 +807,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mNotificationPanelDebugText.setVisibility(View.VISIBLE);
         }
 
-        if (mNavigationBarView == null) {
-            createNavigationBarView(context);
+        try {
+            boolean showNav = mWindowManagerService.hasNavigationBar();
+            if (DEBUG) Log.v(TAG, "hasNavigationBar=" + showNav);
+            if (showNav) {
+                createNavigationBarView(context);
+            }
+        } catch (RemoteException ex) {
+            // no window manager? good luck with that
         }
 
         mAssistManager = new AssistManager(this, context);
@@ -1400,23 +1395,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     }
 
-    private void updateNavigationBarVisibility() {
-        final int mHasNavigationBar = mContext.getResources().getBoolean(
-                    com.android.internal.R.bool.config_showNavigationBar) ? 1 : 0;
-        doShowNavbar = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                    Settings.Secure.NAVIGATION_BAR_VISIBLE, mHasNavigationBar,
-                    UserHandle.USER_CURRENT) == 1;
-
-        if (doShowNavbar) {
-            addNavigationBar();
-        } else {
-            if (mNavigationBarAttached) {
-                mNavigationBarAttached = false;
-                mWindowManager.removeView(mNavigationBarView);
-            }
-        }
-    }
-
     private void prepareNavigationBarView() {
         mNavigationBarView.reorient();
 
@@ -1444,11 +1422,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         prepareNavigationBarView();
 
-
-        if (!mNavigationBarAttached) {
-            mNavigationBarAttached = true;
-            mWindowManager.addView(mNavigationBarView, getNavigationBarLayoutParams());
-        }
+        mWindowManager.addView(mNavigationBarView, getNavigationBarLayoutParams());
     }
 
     protected void repositionNavigationBar() {
@@ -2708,7 +2682,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
 
         mExpandedVisible = true;
-        if (mNavigationBarView != null && mNavigationBarAttached)
+        if (mNavigationBarView != null)
             mNavigationBarView.setSlippery(true);
 
         // Expand the window to encompass the full screen in anticipation of the drag.

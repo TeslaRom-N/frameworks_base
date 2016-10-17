@@ -7154,6 +7154,13 @@ public final class Settings {
         public static final String QS_DATA_ADVANCED = "qs_data_advanced";
 
         /**
+         * Add or remove software navigation bar
+         *
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_VISIBLE = "navigation_bar_visible";
+
+        /**
          * Launch actions for left/right lockscreen targets
          * @hide
          */

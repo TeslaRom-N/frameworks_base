@@ -52,7 +52,4 @@
   <!-- HwKeys in TeslaCoil -->
   <java-symbol type="bool" name="config_showHwKeys" />
 
-  <!-- Screen Recording -->
-  <java-symbol type="bool" name="config_enableScreenrecordChord" />
-
 </resources>

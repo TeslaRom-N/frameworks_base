@@ -21,16 +21,17 @@ import android.graphics.drawable.Drawable;
 public interface WeatherController {
     void addCallback(Callback callback);
     void removeCallback(Callback callback);
+    void updateWeather();
     WeatherInfo getWeatherInfo();
 
     public interface Callback {
         void onWeatherChanged(WeatherInfo temp);
     }
     public static class WeatherInfo {
-        public String temp = null;
         public String city = null;
         public String condition = null;
         public int conditionCode = 0;
         public Drawable conditionDrawable = null;
+        public String temp = null;
     }
 }

@@ -2226,5 +2226,8 @@ message MetricsEvent {
 
     // Quick setting tiles
     QUICK_SETTINGS = 412;
+
+    // Lockscreen weather
+    LOCKSCREEN_WEATHER_SETTINGS = 413;
   }
 }

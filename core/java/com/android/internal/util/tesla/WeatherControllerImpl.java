@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -45,12 +46,15 @@ public class WeatherControllerImpl implements WeatherController {
     public static final Uri CURRENT_WEATHER_URI
             = Uri.parse("content://com.cyanogenmod.lockclock.weather.provider/weather/current");
     public static final String[] WEATHER_PROJECTION = new String[]{
-            "temperature",
             "city",
             "condition",
-            "condition_code"
+            "condition_code",
+            "temperature"
     };
     public static final String LOCK_CLOCK_PACKAGE_NAME = "com.cyanogenmod.lockclock";
+
+    private static final int WEATHER_ICON_MONOCHROME = 0;
+    private static final int WEATHER_ICON_COLORED = 1;
 
     private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Receiver mReceiver = new Receiver();
@@ -81,10 +85,22 @@ public class WeatherControllerImpl implements WeatherController {
     }
 
     private Drawable getIcon(int conditionCode) {
+        int iconNameValue = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
+        String iconName;
+
+        if (iconNameValue == WEATHER_ICON_MONOCHROME) {
+            iconName = "weather_";
+        } else if (iconNameValue == WEATHER_ICON_COLORED) {
+            iconName = "weather_color_";
+        } else {
+            iconName = "weather_vclouds_";
+        }
+
         try {
             Resources resources =
                     mContext.createPackageContext(LOCK_CLOCK_PACKAGE_NAME, 0).getResources();
-            return resources.getDrawable(resources.getIdentifier("weather_" + conditionCode,
+            return resources.getDrawable(resources.getIdentifier(iconName + conditionCode,
                     "drawable", LOCK_CLOCK_PACKAGE_NAME));
         } catch (PackageManager.NameNotFoundException e) {
             return null;
@@ -105,11 +121,11 @@ public class WeatherControllerImpl implements WeatherController {
         } else {
             try {
                 c.moveToFirst();
-                mCachedInfo.temp = c.getString(0);
-                mCachedInfo.city = c.getString(1);
-                mCachedInfo.condition = c.getString(2);
-                mCachedInfo.conditionCode = c.getInt(3);
+                mCachedInfo.city = c.getString(0);
+                mCachedInfo.condition = c.getString(1);
+                mCachedInfo.conditionCode = c.getInt(2);
                 mCachedInfo.conditionDrawable = getIcon(mCachedInfo.conditionCode);
+                mCachedInfo.temp = c.getString(3);
             } finally {
                 c.close();
             }
@@ -135,6 +151,12 @@ public class WeatherControllerImpl implements WeatherController {
             queryWeather();
             fireCallback();
         }
+    }
+
+    @Override
+    public void updateWeather() {
+        queryWeather();
+        fireCallback();
     }
 
 }

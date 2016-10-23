@@ -397,6 +397,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     int mMaxAllowedKeyguardNotifications;
 
+    private int mShowCarrierLabel;
+    private TextView mCarrierLabel;
     boolean mExpandedVisible;
 
     private int mNavigationBarWindowState = WINDOW_STATE_SHOWING;
@@ -539,10 +541,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_CARRIER),
+                    false, this, UserHandle.USER_ALL);
+            update();
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            update();
+
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_ROWS_PORTRAIT))
                 || uri.equals(Settings.System.getUriFor(
@@ -553,8 +562,26 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 || uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE))) {
                 updateQSRowsColumnsLandscape();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_CARRIER))) {
+                update();
+                updateCarrier();
             }
+
+            update();
         }
+
+
+        void unobserve() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+         public void update() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mShowCarrierLabel = Settings.System.getIntForUser(resolver,
+                    Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
+         }
     }
 
     private int mInteractingWindows;
@@ -1004,6 +1031,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         initSignalCluster(mStatusBarView);
         initSignalCluster(mKeyguardStatusBar);
         initEmergencyCryptkeeperText();
+
+        mCarrierLabel = (TextView) mStatusBarWindow.findViewById(R.id.statusbar_carrier_text);
+        if (mCarrierLabel != null) {
+            updateCarrier();
+        }
 
         mFlashlightController = new FlashlightController(mContext);
         mKeyguardBottomArea.setFlashlightController(mFlashlightController);
@@ -2092,6 +2124,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     public void requestNotificationUpdate() {
         updateNotifications();
+    }
+
+    private void updateCarrier() {
+        if (mCarrierLabel != null) {
+            if (mShowCarrierLabel == 2) {
+                mCarrierLabel.setVisibility(View.VISIBLE);
+            } else if (mShowCarrierLabel == 3) {
+                mCarrierLabel.setVisibility(View.VISIBLE);
+            } else {
+                mCarrierLabel.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -4491,6 +4535,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateStackScrollerState(goingToFullShade, fromShadeLocked);
         updateNotifications();
         checkBarModes();
+        updateCarrier();
         updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
         mKeyguardMonitor.notifyKeyguardState(mStatusBarKeyguardViewManager.isShowing(),
                 mStatusBarKeyguardViewManager.isSecure(),

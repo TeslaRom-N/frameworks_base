@@ -83,6 +83,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     private ClockController mClockController;
     private View mCenterClockLayout;
     private NetworkTraffic mNetworkTraffic;
+    private TextView mCarrierLabel;
 
     //private BatteryMeterView mBatteryMeterView;
     //private BatteryMeterView mBatteryMeterViewKeyguard;
@@ -147,6 +148,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         //scaleBatteryMeterViews(context);
 
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
+        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mHandler = new Handler();
@@ -541,6 +543,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
             v.setImageTintList(ColorStateList.valueOf(getTint(mTintArea, v, mIconTint)));
         }
         mSignalCluster.setIconTint(mIconTint, mDarkIntensity, mTintArea);
+        mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
         mClockController.setTextColor(mIconTint);
 	mNetworkTraffic.setDarkIntensity(mDarkIntensity);
         mBatteryViewManager.setDarkIntensity(mDarkIntensity);
@@ -596,6 +599,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         loadDimens();
         mNotificationIconAreaController.onDensityOrFontScaleChanged(mContext);
         updateClock();
+        updateCarrier();
         for (int i = 0; i < mStatusIcons.getChildCount(); i++) {
             View child = mStatusIcons.getChildAt(i);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -611,6 +615,10 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         }
         mBatteryViewManager.onDensityOrFontScaleChanged();
         //scaleBatteryMeterViews(mContext);
+    }
+
+    private void updateCarrier() {
+        FontSizeUtils.updateFontSize(mCarrierLabel, R.dimen.status_bar_carrier_height);
     }
 
     private void updateClock() {

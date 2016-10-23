@@ -16,4 +16,7 @@
 -->
 <resources>
     <dimen name="shortcut_picker_left_padding">40dip</dimen>
+
+    <!-- carrier label text height -->
+    <dimen name="status_bar_carrier_height">14dp</dimen>
 </resources>

@@ -279,7 +279,7 @@
         </activity>
 
         <activity
-            android:name=".purenexus.LockscreenShortcutsActivity"
+            android:name=".tesla.LockscreenShortcutsActivity"
             android:icon="@drawable/tuner"
             android:label="@string/lockscreen_targets_message"
             android:theme="@android:style/Theme.Material.Settings"

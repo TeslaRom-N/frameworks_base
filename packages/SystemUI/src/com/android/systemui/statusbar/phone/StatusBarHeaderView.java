@@ -369,7 +369,6 @@ public class StatusBarHeaderView extends BaseStatusBarHeader implements View.OnC
             updateSignalClusterDetachment();
         }
         mEmergencyCallsOnly.setVisibility(mExpanded && mShowEmergencyCallsOnly ? VISIBLE : GONE);
-        mBatteryLevel.setVisibility(mExpanded ? View.VISIBLE : View.GONE);
     }
 
     private void updateSignalClusterDetachment() {

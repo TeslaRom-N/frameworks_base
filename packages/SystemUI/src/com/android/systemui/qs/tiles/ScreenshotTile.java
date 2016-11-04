@@ -75,9 +75,9 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
         }
         if (Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.SCREENSHOT_TYPE, 0) == 1) {
-        takeScreenshot(mScreenshotFullscreen);
-        } else {
         takeScreenshot(mScreenshotSelectedRegion);
+        } else {
+        takeScreenshot(mScreenshotFullscreen);
         }
     }
 
@@ -110,9 +110,9 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
         public void setScreenshotType(int screenshotType) {
             if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SCREENSHOT_TYPE, 0) == 1) {
-            mScreenshotFullscreen = screenshotType;
-            } else {
             mScreenshotSelectedRegion = screenshotType;
+            } else {
+            mScreenshotFullscreen = screenshotType;
             }
         }
 
@@ -120,9 +120,9 @@ public class ScreenshotTile extends QSTile<QSTile.BooleanState> {
         public void run() {
         if (Settings.System.getInt(mContext.getContentResolver(),
               Settings.System.SCREENSHOT_TYPE, 0) == 1) {
-           takeScreenshot(mScreenshotFullscreen);
-        } else {
            takeScreenshot(mScreenshotSelectedRegion);
+        } else {
+           takeScreenshot(mScreenshotFullscreen);
            }
         }
     }

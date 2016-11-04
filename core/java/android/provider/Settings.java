@@ -4049,6 +4049,12 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
 
         /**
+         * Whether to allow fullscreen screenshots or let the user select which area to screenshot
+         *
+         */
+        public static final String SCREENSHOT_TYPE = "screenshot_type";
+
+        /**
          * Whether to display sound panel in the power menu
          *
          * @hide

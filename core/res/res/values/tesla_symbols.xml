@@ -49,9 +49,6 @@
  <!-- Doze invert -->
   <java-symbol type="bool" name="config_invert_colors_on_doze" />
 
-  <!-- HwKeys in TeslaCoil -->
-  <java-symbol type="bool" name="config_showHwKeys" />
-
   <!-- Powermenu animations -->
   <java-symbol type="style" name="GlobalActionsAnimation" />
   <java-symbol type="style" name="GlobalActionsAnimationTop" />

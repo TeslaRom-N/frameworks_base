@@ -5441,6 +5441,7 @@ public class PackageParser {
             ai.enabled = false;
         }
         ai.enabledSetting = state.enabled;
+        ai.resourceDirs = state.resourceDirs;
     }
 
     public static ApplicationInfo generateApplicationInfo(Package p, int flags,

@@ -256,7 +256,7 @@
                   android:icon="@drawable/tuner"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_statusbar_title"
-                  android:parentActivityName="com.dirtyunicorns.dutweaks.DirtyTweaks"
+                  android:parentActivityName="com.gzr.teslacoil.TeslaCoil"
                   android:process=":tuner"
                   android:exported="true">
         </activity>
@@ -264,7 +264,7 @@
         <activity android:name=".tuner.NightModeActivity"
                   android:theme="@style/TunerSettings"
                   android:label="@string/systemui_tuner_nightmode_title"
-                  android:parentActivityName="com.dirtyunicorns.dutweaks.DirtyTweaks"
+                  android:parentActivityName="com.gzr.teslacoil.TeslaCoil"
                   android:process=":tuner"
                   android:exported="true">
         </activity>

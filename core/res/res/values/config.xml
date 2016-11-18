@@ -2732,4 +2732,9 @@
     <!-- Allow the gesture to tap the power button N times to start
          the Emergency Call while the device is non-interactive. -->
     <bool name="config_emergencyCallOnPowerkeyTapGestureEnabled">false</bool>
+
+    <bool name="config_regional_hotspot_show_maximum_connection_enable">false</bool>
+    <bool name="config_regional_hotspot_show_broadcast_ssid_checkbox">false</bool>
+    <bool name="config_regional_hotspot_show_notification_when_turn_on">false</bool>
+
 </resources>

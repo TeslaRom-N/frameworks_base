@@ -2584,6 +2584,11 @@
 
   <java-symbol type="string" name="now_string_shortest" />
 
+  <!-- Symbols/Overlays for carrier hotspot -->
+  <java-symbol type="bool" name="config_regional_hotspot_show_maximum_connection_enable" />
+  <java-symbol type="bool" name="config_regional_hotspot_show_broadcast_ssid_checkbox" />
+  <java-symbol type="bool" name="config_regional_hotspot_show_notification_when_turn_on" />
+
   <!-- Encryption notification while accounts are locked by credential encryption -->
   <java-symbol type="string" name="user_encrypted_title" />
   <java-symbol type="string" name="user_encrypted_message" />

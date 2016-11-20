@@ -166,10 +166,6 @@ interface IAudioService {
 
     List<AudioRecordingConfiguration> getActiveRecordingConfigurations();
 
-    void handleHotwordInput(boolean listening);
-
-    String getCurrentHotwordInputPackageName();
-
     void updateRemoteControllerOnExistingMediaPlayers();
 
     void addMediaPlayerAndUpdateRemoteController(String packageName);

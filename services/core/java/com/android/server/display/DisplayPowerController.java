@@ -624,6 +624,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             } else {
                 setProximitySensorEnabled(false);
                 mWaitingForNegativeProximity = false;
+                mProximity = PROXIMITY_UNKNOWN;
             }
             if (mScreenOffBecauseOfProximity
                     && mProximity != PROXIMITY_POSITIVE) {

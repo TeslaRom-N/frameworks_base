@@ -88,4 +88,7 @@
     <dimen name="recent_thumbnail_bottom_padding">3dp</dimen>
     <dimen name="recent_keyguard_text_margin">8dp</dimen>
 
+    <dimen name="navbar_single_hand_mode_horizontal_threshhold">90dp</dimen>
+    <dimen name="navbar_single_hand_mode_vertical_threshhold">48dp</dimen>
+
 </resources>

@@ -4163,7 +4163,13 @@ public final class Settings {
          * 2 - Enabled (screen is rotated by 180 or 270 degrees: tablet)
          * @hide
          */
-         public static final String SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
+        public static final String SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
+
+        /**
+         * Whether to display qs tile titles in the qs panel
+         * @hide
+         */
+        public static final String QS_TILE_TITLE_VISIBILITY = "qs_tile_title_visibility";
 
         /**
          * Disable dashboard conditions in settings

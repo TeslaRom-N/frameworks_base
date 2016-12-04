@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.TypedValue;
@@ -90,6 +91,9 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private BatteryViewManager mBatteryViewManager;
 
+    // Tesla Logo
+    private ImageView mTeslaLogo;
+
     private int mIconSize;
     private int mIconHPadding;
 
@@ -148,7 +152,11 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         //scaleBatteryMeterViews(context);
 
         mNetworkTraffic = (NetworkTraffic) statusBar.findViewById(R.id.networkTraffic);
+
         mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
+
+        mTeslaLogo = (ImageView) statusBar.findViewById(R.id.tesla_logo);
+
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
         mHandler = new Handler();
@@ -340,11 +348,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_TESLA_LOGO, 0) == 1) {
+           animateHide(mTeslaLogo, animate);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_TESLA_LOGO, 0) == 1) {
+           animateShow(mTeslaLogo, animate);
+        }
     }
 
     public void setClockVisibility(boolean visible) {
@@ -547,6 +563,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mClockController.setTextColor(mIconTint);
 	mNetworkTraffic.setDarkIntensity(mDarkIntensity);
         mBatteryViewManager.setDarkIntensity(mDarkIntensity);
+        mTeslaLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
     }
 
     public void appTransitionPending() {

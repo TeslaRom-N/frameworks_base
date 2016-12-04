@@ -122,4 +122,8 @@
     <!-- SystemUI Tuner Parts -->
     <string name="systemui_tuner_statusbar_title">Statusbar items</string>
 
+    <!-- Tesla Logo -->
+    <string name="status_bar_tesla_logo_title">Tesla logo</string>
+    <string name="status_bar_tesla_logo_summary">Enable to show Tesla logo on the left side of the statusbar</string>
+
 </resources>

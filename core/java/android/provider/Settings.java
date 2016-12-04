@@ -4279,6 +4279,12 @@ public final class Settings {
         public static final String LOCK_SCREEN_VISIBLE_NOTIFICATIONS = "lock_screen_visible_notifications";
 
         /**
+         * Statusbar Tesla logo
+         * @hide
+         */
+        public static final String STATUS_BAR_TESLA_LOGO = "status_bar_tesla_logo";
+
+        /**
          * custom carrier label. The value is
          * String.
          */

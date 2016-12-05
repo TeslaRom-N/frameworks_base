@@ -32,4 +32,7 @@
     <color name="qs_battery_graph_text_color">#66FFFFFF</color>
     <!-- QS battery accent color -->
     <color name="qs_battery_accent">#ff80cbc4</color>
+
+    <!-- Battery charging color -->
+    <color name="system_primary_color">@*android:color/material_blue_grey_900</color>
 </resources>

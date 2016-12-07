@@ -18,4 +18,8 @@
 <resources>
     <!-- carrier label color -->
     <color name="status_bar_carrier_color">#FFFFFFFF</color>
+
+    <!-- Floating action button -->
+    <color name="fab_color">@*android:color/material_deep_teal_500</color>
+    <color name="floating_action_button_icon_color">#ffffff</color>
 </resources>

@@ -122,6 +122,8 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     private KeyguardIndicationController mIndicationController;
     private AccessibilityController mAccessibilityController;
     private PhoneStatusBar mPhoneStatusBar;
+    private KeyguardAffordanceHelper mAffordanceHelper;
+
     private LockscreenShortcutsHelper mShortcutHelper;
     private final ColorMatrixColorFilter mGrayScaleFilter;
 
@@ -322,6 +324,10 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         mPhoneStatusBar = phoneStatusBar;
         updateCameraVisibility(); // in case onFinishInflate() was called too early
         updateLeftButtonVisibility();
+    }
+
+    public void setAffordanceHelper(KeyguardAffordanceHelper affordanceHelper) {
+        mAffordanceHelper = affordanceHelper;
     }
 
     public void setUserSetupComplete(boolean userSetupComplete) {
@@ -703,6 +709,9 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
             if (mCameraPreview != null) {
                 mCameraPreview.setVisibility(View.GONE);
             }
+            if (mAffordanceHelper != null) {
+                mAffordanceHelper.updatePreviews();
+            }
         }
     }
 
@@ -724,6 +733,9 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         if (mLeftPreview != null) {
             mPreviewContainer.addView(mLeftPreview);
             mLeftPreview.setVisibility(View.INVISIBLE);
+        }
+        if (mAffordanceHelper != null) {
+            mAffordanceHelper.updatePreviews();
         }
     }
 
@@ -810,6 +822,13 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         @Override
         public void onStrongAuthStateChanged(int userId) {
             mLockIcon.update();
+        }
+
+        @Override
+        public void onUserUnlocked() {
+            inflateCameraPreview();
+            updateCameraVisibility();
+            updateLeftAffordance();
         }
     };
 

@@ -336,6 +336,16 @@ interface IWindowManager
     boolean needsNavigationBar();
 
     /**
+     * Called by System UI to notify of changes to the visibility of Recents.
+     */
+    oneway void setRecentsVisibility(boolean visible);
+
+    /**
+     * Called by System UI to notify of changes to the visibility of PIP.
+     */
+    oneway void setTvPipVisibility(boolean visible);
+
+    /**
      * Device has a software navigation bar (separate from the status bar).
      */
     boolean hasNavigationBar();

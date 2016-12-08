@@ -2323,8 +2323,8 @@
     <!-- An array of CDMA roaming indicators which means international roaming -->
     <integer-array translatable="false" name="config_cdma_international_roaming_indicators" />
 
-    <!-- set the system language as value of EF LI/EF PL -->
-    <bool name="config_use_sim_language_file">true</bool>
+    <!-- flag to indicate if EF LI/EF PL should be used for system language -->
+    <bool name="config_use_sim_language_file">false</bool>
 
     <!-- Use ERI text for network name on CDMA LTE -->
     <bool name="config_LTE_eri_for_network_name">true</bool>
@@ -2617,4 +2617,10 @@
     <string name="operator_ping_url" translatable="false"></string>
     <!-- Zero Balance feature enable config -->
     <bool name="config_zero_balance_operator">false</bool>
+
+    <!-- Doze: should the TYPE_PICK_UP_GESTURE sensor be used as a pulse signal. -->
+    <bool name="config_dozePulsePickup">false</bool>
+
+    <!-- Type of the double tap sensor. Empty if double tap is not supported. -->
+    <string name="config_dozeDoubleTapSensorType" translatable="false"></string>
 </resources>

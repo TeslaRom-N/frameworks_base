@@ -1311,12 +1311,12 @@ public interface WindowManagerPolicy {
     /**
      * Called by System UI to notify of changes to the visibility of Recents.
      */
-    oneway void setRecentsVisibility(boolean visible);
+    public void setRecentsVisibilityLw(boolean visible);
 
     /**
      * Called by System UI to notify of changes to the visibility of PIP.
      */
-    oneway void setTvPipVisibility(boolean visible);
+    public void setTvPipVisibilityLw(boolean visible);
 
     /**
      * Specifies whether there is an on-screen navigation bar separate from the status bar.

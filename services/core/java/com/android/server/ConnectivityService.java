@@ -102,6 +102,7 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -817,7 +818,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mTestMode = SystemProperties.get("cm.test.mode").equals("true")
                 && SystemProperties.get("ro.build.type").equals("eng");
 
-        mTethering = new Tethering(mContext, mNetd, statsService);
+        mTethering = new Tethering(mContext, mNetd, statsService, mPolicyManager);
 
         mPermissionMonitor = new PermissionMonitor(mContext, mNetd);
 
@@ -1916,7 +1917,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
     }
-
     private void flushVmDnsCache() {
         /*
          * Tell the VMs to toss their DNS caches
@@ -2189,6 +2189,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             networkCapabilities.hasCapability(NET_CAPABILITY_FOREGROUND)) {
                         Slog.wtf(TAG, "BUG: " + nai + " has CS-managed capability.");
                     }
+
                     updateCapabilities(nai.getCurrentScore(), nai, networkCapabilities);
                     break;
                 }
@@ -3023,12 +3024,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ConnectivityManager.enforceTetherChangePermission(mContext);
         if (isTetheringSupported()) {
             final int status = mTethering.tether(iface);
-            if (status == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-                try {
-                    mPolicyManager.onTetheringChanged(iface, true);
-                } catch (RemoteException e) {
-                }
-            }
             return status;
         } else {
             return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
@@ -3042,12 +3037,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (isTetheringSupported()) {
             final int status = mTethering.untether(iface);
-            if (status == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
-                try {
-                    mPolicyManager.onTetheringChanged(iface, false);
-                } catch (RemoteException e) {
-                }
-            }
             return status;
         } else {
             return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
@@ -4666,11 +4655,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private void updateCapabilities(
             int oldScore, NetworkAgentInfo nai, NetworkCapabilities networkCapabilities) {
-        if (nai.everConnected && !nai.networkCapabilities.equalImmutableCapabilities(
-                networkCapabilities)) {
-            Slog.wtf(TAG, "BUG: " + nai + " changed immutable capabilities: "
-                    + nai.networkCapabilities + " -> " + networkCapabilities);
-        }
 
         // Don't modify caller's NetworkCapabilities.
         networkCapabilities = new NetworkCapabilities(networkCapabilities);

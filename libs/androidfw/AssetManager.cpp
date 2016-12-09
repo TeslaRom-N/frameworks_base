@@ -65,6 +65,7 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
+static const char* kSlimFrameworkAssets = "framework/org.slim.framework-res.apk";
 static const char* kResourceCache = "resource-cache";
 
 static const char* kExcludeExtension = ".EXCLUDE";
@@ -325,7 +326,16 @@ bool AssetManager::addDefaultAssets()
     String8 path(root);
     path.appendPath(kSystemAssets);
 
-    return addAssetPath(path, NULL, false /* appAsLib */, true /* isSystemAsset */);
+    bool ret = addAssetPath(path, NULL, false /* appAsLib */, true /* isSystemAsset */);
+    if (ret) {
+        String8 pathSlim(root);
+        pathSlim.appendPath(kSlimFrameworkAssets);
+
+        if (!addAssetPath(pathSlim, NULL, false /* appAsLib */, false /*isSystemAsset */)) {
+            ALOGE("Failed to load Slim framework resources");
+        }
+    }
+    return ret;
 }
 
 int32_t AssetManager::nextAssetPath(const int32_t cookie) const
@@ -1627,6 +1637,7 @@ void AssetManager::mergeInfoLocked(SortedVector<AssetDir::FileInfo>* pMergedInfo
     int i, j;
     for (i = pContents->size() -1; i >= 0; i--) {
         bool add = true;
+
         for (j = pMergedInfo->size() -1; j >= 0; j--) {
             /* case-sensitive comparisons, to behave like UNIX fs */
             if (strcmp(pContents->itemAt(i).mFileName,
@@ -1637,6 +1648,7 @@ void AssetManager::mergeInfoLocked(SortedVector<AssetDir::FileInfo>* pMergedInfo
                 break;
             }
         }
+
         if (add)
             pMergedInfo->add(pContents->itemAt(i));
     }

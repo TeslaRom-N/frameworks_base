@@ -76,6 +76,8 @@ public class KeyguardIndicationController {
     private boolean mPowerPluggedIn;
     private boolean mPowerCharged;
     private int mChargingSpeed;
+    private int mChargingCurrent;
+    private int mChargingVoltage;
     private int mChargingWattage;
     private String mMessageToShowOnScreenOn;
 
@@ -219,12 +221,23 @@ public class KeyguardIndicationController {
                 break;
         }
 
+        String chargingCurrent = "";
+        boolean showChargingCurrent = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.LOCKSCREEN_CHARGING_CURRENT, 0, UserHandle.USER_CURRENT) == 1;
+
+        if (mChargingCurrent != 0 && showChargingCurrent) {
+            chargingCurrent = "\n" + (mChargingCurrent / 1000) + "mA/h / "
+                    + (mChargingVoltage / 1000 / 1000) + "V";
+        }
+
         if (hasChargingTime) {
             String chargingTimeFormatted = Formatter.formatShortElapsedTimeRoundingUpToMinutes(
                     mContext, chargingTimeRemaining);
-            return mContext.getResources().getString(chargingId, chargingTimeFormatted);
+            String chargingText = mContext.getResources().getString(chargingId, chargingTimeFormatted);
+            return chargingText + chargingCurrent;
         } else {
-            return mContext.getResources().getString(chargingId);
+            String chargingText = mContext.getResources().getString(chargingId);
+            return chargingText + chargingCurrent;
         }
     }
 
@@ -237,6 +250,8 @@ public class KeyguardIndicationController {
                     || status.status == BatteryManager.BATTERY_STATUS_FULL;
             mPowerPluggedIn = status.isPluggedIn() && isChargingOrFull;
             mPowerCharged = status.isCharged();
+            mChargingCurrent = status.maxChargingCurrent;
+            mChargingVoltage = status.maxChargingVoltage;
             mChargingWattage = status.maxChargingWattage;
             mChargingSpeed = status.getChargingSpeed(mSlowThreshold, mFastThreshold);
             updateIndication();

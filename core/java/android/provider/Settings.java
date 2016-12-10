@@ -4247,10 +4247,10 @@ public final class Settings {
         public static final String LOCK_SCREEN_WEATHER_CONDITION_ICON = "lock_screen_weather_condition_icon";
 
         /**
-         * Whether to show the negociated charger current in the lockscreen
+         * Whether to show the battery info on the lockscreen while charging
          * @hide
          */
-        public static final String LOCKSCREEN_CHARGING_CURRENT = "lockscreen_charging_current";
+        public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
  
         /**
          * Whether to hide the weather panel when the notifications will reach the number of notifications

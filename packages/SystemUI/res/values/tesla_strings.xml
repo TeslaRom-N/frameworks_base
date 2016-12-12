@@ -137,6 +137,7 @@
 
     <!-- SystemUI Tuner Parts -->
     <string name="systemui_tuner_statusbar_title">Statusbar items</string>
+    <string name="systemui_tuner_pnc_title">Power notification controls</string>
 
     <!-- Tesla Logo -->
     <string name="status_bar_tesla_logo_title">Tesla logo</string>

@@ -4168,6 +4168,12 @@ public final class Settings {
         public static final String POWERMENU_SCREENRECORD = "powermenu_screenrecord";
 
         /**
+         * Dynamic Navbar Switch
+         * @hide
+         */
+        public static final String NAV_BAR_DYNAMIC = "nav_bar_dynamic";
+
+        /**
          * Home butotn wake
          * Whether to wake the screen with the home key, the value is boolean.
          * @hide

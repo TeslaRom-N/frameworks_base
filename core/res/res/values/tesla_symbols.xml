@@ -59,4 +59,7 @@
   <java-symbol type="style" name="GlobalActionsAnimationTop" />
   <java-symbol type="style" name="GlobalActionsAnimationEnter" />
 
+  <!-- Dynamic Navbar -->
+  <java-symbol type="color" name="input_method_navigation_guard_dynamic" />
+
 </resources>

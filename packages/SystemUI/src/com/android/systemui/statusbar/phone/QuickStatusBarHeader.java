@@ -77,6 +77,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
     private ViewGroup mDateTimeGroup;
     private ViewGroup mDateTimeAlarmGroup;
+    private ViewGroup mDateTimeAlarmCenterGroup;
     private TextView mEmergencyOnly;
 
     protected ExpandableIndicator mExpandIndicator;
@@ -122,6 +123,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mDateTimeAlarmGroup = (ViewGroup) findViewById(R.id.date_time_alarm_group);
         mDateTimeAlarmGroup.setOnClickListener(this);
         mDateTimeAlarmGroup.findViewById(R.id.empty_time_view).setVisibility(View.GONE);
+        mDateTimeAlarmCenterGroup = (ViewGroup) findViewById(R.id.date_time_alarm_center_group);
+        mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
         mDateTimeGroup = (ViewGroup) findViewById(R.id.date_time_group);
         mDateTimeGroup.setOnClickListener(this);
         mDateTimeGroup.setPivotX(0);
@@ -202,13 +205,13 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
     private void updateDateTimeCenter() {
         mDateTimeGroupCenter = isDateTimeGroupCenter();
-        LayoutParams lp = (LayoutParams) mDateTimeAlarmGroup.getLayoutParams();
 	if (mDateTimeGroupCenter && (!(isSettingsIcon || isSettingsExpanded) || !isEdit || !isMultiUserSwitch || !isExpandIndicator)) {
-	    lp.addRule(CENTER_HORIZONTAL);
+            mDateTimeAlarmGroup.setVisibility(View.GONE);
+            mDateTimeAlarmCenterGroup.setVisibility(View.VISIBLE);
         } else {
-	    lp.addRule(CENTER_HORIZONTAL,0);
+            mDateTimeAlarmCenterGroup.setVisibility(View.GONE);
+            mDateTimeAlarmGroup.setVisibility(View.VISIBLE);
         }
-        mDateTimeAlarmGroup.setLayoutParams(lp);
     }
 
     @Override

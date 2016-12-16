@@ -877,9 +877,6 @@ public abstract class BaseStatusBar extends SystemUI implements
         Collections.addAll(mNonBlockablePkgs, mContext.getResources().getStringArray(
                 com.android.internal.R.array.config_nonBlockableNotificationPackages));
 
-
-	}
-
         mPieSettingsObserver.onChange(false);
         mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                 Settings.System.PA_PIE_STATE), false, mPieSettingsObserver);

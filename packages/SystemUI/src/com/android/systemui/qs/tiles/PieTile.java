@@ -60,7 +60,7 @@ public class PieTile extends QSTile<QSTile.BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.QUICK_SETTINGS;
+        return MetricsEvent.TESLACOIL;
     }
 
     @Override

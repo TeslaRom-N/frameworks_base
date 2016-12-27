@@ -22,9 +22,6 @@
     <!-- Network traffic monitor multi-line text size -->
     <dimen name="net_traffic_multi_text_size">7dp</dimen>
 
-    <!-- Battery Level Text Size -->
-    <dimen name="battery_level_text_size_small">12sp</dimen>
-
     <!-- lockscreen shortcuts -->
     <dimen name="lockscreen_icon_side_padding">10dp</dimen>
     <dimen name="lockscreen_icon_size">35dp</dimen>

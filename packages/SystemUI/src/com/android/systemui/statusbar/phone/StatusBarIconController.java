@@ -563,7 +563,6 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mCarrierLabel.setTextColor(getTint(mTintArea, mCarrierLabel, mIconTint));
         mClockController.setTextColor(mIconTint);
 	mNetworkTraffic.setDarkIntensity(mDarkIntensity);
-        mBatteryViewManager.setDarkIntensity(mDarkIntensity);
         mTeslaLogo.setImageTintList(ColorStateList.valueOf(mIconTint));
     }
 

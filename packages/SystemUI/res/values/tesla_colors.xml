@@ -27,11 +27,11 @@
     <color name="status_bar_battery_level_text_color">#ffffff</color>
 
     <!-- QS battery % text color -->
-    <color name="qs_battery_text_color">#ff80cbc4</color>
+    <color name="qs_battery_text_color">?android:attr/colorAccent</color>
     <!-- QS battery graph text color -->
     <color name="qs_battery_graph_text_color">#66FFFFFF</color>
     <!-- QS battery accent color -->
-    <color name="qs_battery_accent">#ff80cbc4</color>
+    <color name="qs_battery_accent">?android:attr/colorAccent</color>
 
     <!-- Battery charging color -->
     <color name="system_primary_color">@*android:color/material_blue_grey_900</color>

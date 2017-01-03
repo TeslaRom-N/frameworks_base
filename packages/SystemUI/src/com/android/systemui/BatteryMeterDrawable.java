@@ -180,7 +180,6 @@ public class BatteryMeterDrawable extends Drawable implements
         colors.recycle();
         updateShowPercent();
         updateForceChargeBatteryText();
-        updateCustomChargingSymbol();
         mWarningString = context.getString(R.string.battery_meter_very_low_overlay_symbol);
         mCriticalLevel = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_criticalBatteryWarningLevel);
@@ -522,7 +521,6 @@ public class BatteryMeterDrawable extends Drawable implements
             updateShowPercent();
             updateChargeColor();
             updateForceChargeBatteryText();
-            updateCustomChargingSymbol();
             postInvalidate();
         }
     }

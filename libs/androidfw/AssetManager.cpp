@@ -65,7 +65,6 @@ static const char* kDefaultVendor = "default";
 static const char* kAssetsRoot = "assets";
 static const char* kAppZipName = NULL; //"classes.jar";
 static const char* kSystemAssets = "framework/framework-res.apk";
-static const char* kSlimFrameworkAssets = "framework/org.slim.framework-res.apk";
 static const char* kResourceCache = "resource-cache";
 
 static const char* kExcludeExtension = ".EXCLUDE";
@@ -326,16 +325,7 @@ bool AssetManager::addDefaultAssets()
     String8 path(root);
     path.appendPath(kSystemAssets);
 
-    bool ret = addAssetPath(path, NULL, false /* appAsLib */, true /* isSystemAsset */);
-    if (ret) {
-        String8 pathSlim(root);
-        pathSlim.appendPath(kSlimFrameworkAssets);
-
-        if (!addAssetPath(pathSlim, NULL, false /* appAsLib */, false /*isSystemAsset */)) {
-            ALOGE("Failed to load Slim framework resources");
-        }
-    }
-    return ret;
+    return addAssetPath(path, NULL, false /* appAsLib */, true /* isSystemAsset */);
 }
 
 int32_t AssetManager::nextAssetPath(const int32_t cookie) const

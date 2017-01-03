@@ -105,7 +105,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        sound,reboot,sync,usb_tether,adb_network,nfc,ime
+        sound,reboot,volume,sync,usb_tether,adb_network,nfc,ime,teslacoil
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->

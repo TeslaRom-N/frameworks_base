@@ -161,6 +161,7 @@ import com.android.systemui.classifier.FalsingLog;
 import com.android.systemui.classifier.FalsingManager;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
+import com.android.systemui.omni.StatusBarHeaderMachine;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.navigation.NavigationController;
 import com.android.systemui.navigation.Navigator;
@@ -473,6 +474,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     int[] mAbsPos = new int[2];
     ArrayList<Runnable> mPostCollapseRunnables = new ArrayList<>();
 
+    private StatusBarHeaderMachine mStatusBarHeaderMachine;
+
     private boolean mAutomaticBrightness;
     private boolean mBrightnessControl;
     private boolean mBrightnessChanged;
@@ -764,6 +767,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 		    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_WEATHER_TEMP_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CUSTOM_HEADER),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -1464,6 +1473,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
+
+        mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
+        mStatusBarHeaderMachine.addObserver((QuickStatusBarHeader) mHeader);
+        mStatusBarHeaderMachine.updateEnablement();
 
         return mStatusBarView;
     }
@@ -4284,6 +4297,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mLockscreenWallpaper.setCurrentUser(newUserId);
         mScrimController.setCurrentUser(newUserId);
         updateMediaMetaData(true, false);
+        mStatusBarHeaderMachine.updateEnablement();
     }
 
     private void setControllerUsers() {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright (C) 2015-2016 The CyanogenMod Project
+<!-- Copyright (C) 2016 crDroid Android Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,6 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+
 <resources>
     <declare-styleable name="BatteryMeterViewDrawable">
         <attr name="android:gravity"/>
@@ -54,5 +54,9 @@
             <!-- [Sa + Da - Sa*Da, Sc*(1 - Da) + Dc*(1 - Sa) + min(Sc, Dc)] -->
             <enum name="darken" value="16" />
         </attr>
+    </declare-styleable>
+
+    <declare-styleable name="BatteryBarController">
+        <attr name="viewLocation" format="integer" />
     </declare-styleable>
 </resources>

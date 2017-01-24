@@ -20,4 +20,9 @@
     <string name="select_custom_activity_title">Select custom activity</string>
     <string name="lockscreen_targets_message">Lock screen shortcuts</string>
 
+    <!-- Description for the screen zoom level that makes interface elements smaller. [CHAR LIMIT=24] -->
+    <string name="screen_zoom_summary_smaller">Smaller</string>
+    <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
+    <string name="screen_zoom_summary_smallest">Smallest</string>
+
 </resources>

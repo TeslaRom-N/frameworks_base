@@ -4686,6 +4686,12 @@ public final class Settings {
         public static final String QS_EXPAND_INDICATOR_TOGGLE = "qs_expand_indicator_toggle";
 
         /**
+         * Whether to show or hide the running services icon
+         * @hide
+         */
+        public static final String QS_RUNNING_SERVICES_TOGGLE = "qs_running_services_toggle";
+
+        /**
          * Whether to center or left justify date time group
          * @hide
          */

@@ -114,6 +114,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private boolean isEdit;
     private boolean isExpandIndicator;
     private boolean isMultiUserSwitch;
+    private boolean isRunningServices;
     private boolean mDateTimeGroupCenter;
 
     // omni additions
@@ -238,7 +239,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
     private void updateDateTimeCenter() {
         mDateTimeGroupCenter = isDateTimeGroupCenter();
-	if (mDateTimeGroupCenter && (!(isSettingsIcon || isSettingsExpanded) || !isEdit || !isMultiUserSwitch || !isExpandIndicator)) {
+	if (mDateTimeGroupCenter && (!(isSettingsIcon || isSettingsExpanded) || !isEdit || !isMultiUserSwitch || !isExpandIndicator || !isRunningServices)) {
             mDateTimeAlarmGroup.setVisibility(View.GONE);
             mDateTimeAlarmCenterGroup.setVisibility(View.VISIBLE);
         } else {
@@ -328,6 +329,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     protected void updateVisibilities() {
         updateAlarmVisibilities();
         updateDateTimePosition();
+
         mEmergencyOnly.setVisibility(mExpanded && mShowEmergencyCallsOnly
                 ? View.VISIBLE : View.INVISIBLE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
@@ -346,7 +348,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         isMultiUserSwitch = isMultiUserSwitchEnabled();
         mMultiUserSwitch.setVisibility(isMultiUserSwitch ? View.VISIBLE : View.GONE);
         mMultiUserAvatar.setVisibility(isMultiUserSwitch ? View.VISIBLE : View.GONE);
-        mRunningServicesButton.setVisibility(View.VISIBLE);
+        isRunningServices = isRunningServicesEnabled();
+        mRunningServicesButton.setVisibility(isRunningServices ? View.VISIBLE : View.GONE);
     }
 
     private void updateDateTimePosition() {
@@ -506,6 +509,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public boolean isExpandIndicatorEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_EXPAND_INDICATOR_TOGGLE, 1) == 1;
+    }
+
+    public boolean isRunningServicesEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_RUNNING_SERVICES_TOGGLE, 0) == 1;
     }
 
     public boolean isMultiUserSwitchEnabled() {

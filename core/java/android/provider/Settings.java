@@ -4392,12 +4392,6 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_CARRIER = "status_bar_show_carrier";
 
         /**
-         * Whether to show statusbar clock in the keyguard
-         * @hide
-         */
-        public static final String KEYGUARD_SHOW_CLOCK = "keyguard_show_clock";
-
-        /**
          * show clear all recents button
          * @hide
          */
@@ -4899,6 +4893,12 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CUSTOM_HEADER_IMAGE = "status_bar_custom_header_image";
+
+        /**
+         * Whether to show statusbar clock in the keyguard
+         * @hide
+         */
+        public static final String KEYGUARD_SHOW_CLOCK = "keyguard_show_clock";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

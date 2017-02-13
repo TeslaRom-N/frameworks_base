@@ -1,9 +1,8 @@
 package com.android.systemui.qs;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
@@ -25,6 +24,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     protected int mCellWidth;
     protected int mCellHeight;
     protected int mCellMargin;
+    protected int mDefaultColumns;
 
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     private int mCellMarginTop;
@@ -77,31 +77,10 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     public boolean updateResources() {
         final Resources res = mContext.getResources();
-        final ContentResolver resolver = mContext.getContentResolver();
-        final boolean isPortrait = res.getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT;
-        final int columnsPortrait = Settings.System.getInt(resolver,
-                Settings.System.QS_COLUMNS_PORTRAIT, 3);
-        final int columnsLandscape = Settings.System.getInt(resolver,
-                Settings.System.QS_COLUMNS_LANDSCAPE, res.getInteger(
-                R.integer.config_qs_num_columns_landscape_default));
-        final int columns = Math.max(1, isPortrait ? columnsPortrait : columnsLandscape);
         mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
         mCellMargin = res.getDimensionPixelSize(R.dimen.qs_tile_margin);
         mCellMarginTop = res.getDimensionPixelSize(R.dimen.qs_tile_margin_top);
-
-        if (Settings.System.getInt(mContext.getContentResolver(),
-             Settings.System.QS_TILE_TITLE_VISIBILITY, 1) == 1) {
-            mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
-        } else {
-            mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height_wo_label);
-        }
-
-        if (mColumns != columns) {
-            mColumns = columns;
-            requestLayout();
-            return true;
-        }
+        updateSettings();
         return false;
     }
 
@@ -157,5 +136,26 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     private int getColumnStart(int column) {
         return column * (mCellWidth + mCellMargin) + mCellMargin;
+    }
+
+    @Override
+    public void updateSettings() {
+        final Resources res = mContext.getResources();
+        mDefaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        int columns = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_LAYOUT_COLUMNS, mDefaultColumns,
+                UserHandle.USER_CURRENT);
+
+        if (Settings.System.getInt(mContext.getContentResolver(),
+             Settings.System.QS_TILE_TITLE_VISIBILITY, 1) == 1) {
+            mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
+        } else {
+            mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height_wo_label);
+        }
+
+        if (mColumns != columns) {
+            mColumns = columns;
+            requestLayout();
+        }
     }
 }

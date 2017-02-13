@@ -436,6 +436,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     View mExpandedContents;
     TextView mNotificationPanelDebugText;
 
+    private int mQsLayoutColumns;
+
     // settings
     private QSPanel mQSPanel;
 
@@ -736,18 +738,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_ROWS_PORTRAIT),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLUMNS_PORTRAIT),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_ROWS_LANDSCAPE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_COLUMNS_LANDSCAPE),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_TESLA_LOGO),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -792,6 +782,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_TICKER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_LAYOUT_COLUMNS),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -801,16 +794,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             update();
 
             if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_ROWS_PORTRAIT))
-                || uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_COLUMNS_PORTRAIT))) {
-                updateQSRowsColumnsPortrait();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_ROWS_LANDSCAPE))
-                || uri.equals(Settings.System.getUriFor(
-                    Settings.System.QS_COLUMNS_LANDSCAPE))) {
-                updateQSRowsColumnsLandscape();
-            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_CARRIER))) {
                 update();
                 updateCarrier();
@@ -853,7 +836,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.unregisterContentObserver(this);
         }
 
-         public void update() {
+        public void update() {
             ContentResolver resolver = mContext.getContentResolver();
 
             mTeslaLogo = Settings.System.getIntForUser(resolver,
@@ -882,6 +865,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mShowCarrierLabel = Settings.System.getIntForUser(resolver,
                     Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
 
+            mQsLayoutColumns = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_LAYOUT_COLUMNS, 3, mCurrentUserId);
+
             int mode = Settings.System.getIntForUser(mContext.getContentResolver(),
                             Settings.System.SCREEN_BRIGHTNESS_MODE,
                             Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
@@ -890,7 +876,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mBrightnessControl = Settings.System.getIntForUser(
                     resolver, Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
                     UserHandle.USER_CURRENT) == 1;
-         }
+
+            if (mHeader != null) {
+                    mHeader.updateSettings();
+            }
+        }
     }
 
     private int mInteractingWindows;

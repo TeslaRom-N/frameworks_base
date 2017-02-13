@@ -15,9 +15,6 @@
 -->
 <resources>
 
-    <integer name="config_qs_num_rows_landscape_default">1</integer>
-    <integer name="config_qs_num_columns_landscape_default">4</integer>
-
     <!-- Enable PA Pie relocation to either stick to a physical side or default to the right side -->
     <bool name="config_relocatePieOnRotation">true</bool>
 

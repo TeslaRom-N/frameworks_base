@@ -209,7 +209,6 @@ import com.android.systemui.statusbar.policy.BatteryControllerImpl;
 import com.android.systemui.statusbar.policy.BluetoothControllerImpl;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.slimrecent.RecentController;
-import com.android.systemui.slimrecent.SlimScreenPinningRequest;
 import com.android.systemui.statusbar.policy.CastControllerImpl;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.FlashlightController;
@@ -551,8 +550,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private DUPackageMonitor mPackageMonitor;
 
     private RecentController mSlimRecents;
-
-    private SlimScreenPinningRequest mSlimScreenPinningRequest;
 
     Runnable mLongPressBrightnessChange = new Runnable() {
         @Override
@@ -1435,8 +1432,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mTickerEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.STATUS_BAR_SHOW_TICKER, 0, UserHandle.USER_CURRENT) == 1;
         initTickerView();
-
-        mSlimScreenPinningRequest = new SlimScreenPinningRequest(mContext);
 
         // set the initial view visibility
         setAreThereNotifications();
@@ -5892,7 +5887,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     public void showScreenPinningRequest(int taskId, boolean allowCancel) {
         hideRecents(false, false);
-        //mSlimScreenPinningRequest.showPrompt(taskId, allowCancel);
         mScreenPinningRequest.showPrompt(taskId, allowCancel);
     }
 

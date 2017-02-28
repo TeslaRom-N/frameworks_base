@@ -373,7 +373,7 @@ public abstract class BaseStatusBar extends SystemUI implements
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
-            
+
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.USE_SLIM_RECENTS))) {
                         updateRecents();
@@ -394,7 +394,6 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         if (slimRecents) {
             mSlimRecents = new RecentController(mContext, mLayoutDirection);
-            //mSlimRecents.setCallback(this);
             mRecents = null;
             rebuildRecentsScreen();
         } else {

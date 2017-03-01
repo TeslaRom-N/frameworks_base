@@ -248,6 +248,7 @@ public class RecentCard extends Card {
                         ActivityManagerNative.getDefault()
                                 .startActivityFromRecents(mPersistentTaskId, options.toBundle());
                         mSlimRecents.openLastApptoBottom();
+                        hideCurrentOptions();
                     } catch (RemoteException e) {}
                     return; 
                 }
@@ -270,6 +271,10 @@ public class RecentCard extends Card {
         options.findViewById(R.id.market).setOnClickListener(listener);
         options.findViewById(R.id.close).setOnClickListener(listener);
         options.findViewById(R.id.multiwindow).setOnClickListener(listener);
+    }
+
+    public void hideCurrentOptions() {
+        getCardView().hideOptions(-1, -1);
     }
 
     private Intent getAppInfoIntent() {

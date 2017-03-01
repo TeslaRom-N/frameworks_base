@@ -380,6 +380,7 @@ public class RecentController implements RecentPanelView.OnExitListener,
                     preloadRecentTasksList();
                 }
             } else {
+                openLastApptoBottom();
                 hideRecents(false);
             }
         }

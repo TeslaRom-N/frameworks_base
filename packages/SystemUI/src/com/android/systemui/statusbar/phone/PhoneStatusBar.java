@@ -2011,7 +2011,10 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (mSlimRecents != null) {
             int dockSide = WindowManagerProxy.getInstance().getDockSide();
             if (dockSide == WindowManager.DOCKED_INVALID) {
-                mSlimRecents.startMultiWin();
+                mSlimRecents.startMultiWindow();
+                if (metricsDockAction != -1) {
+                    MetricsLogger.action(mContext, metricsDockAction);
+                }
             } else {
                 EventBus.getDefault().send(new UndockingTaskEvent());
                 if (metricsUndockAction != -1) {

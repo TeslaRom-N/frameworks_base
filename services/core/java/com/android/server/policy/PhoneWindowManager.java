@@ -151,6 +151,7 @@ import com.android.internal.policy.IKeyguardService;
 import com.android.internal.policy.IShortcutService;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.utils.du.DUActionUtils;
+import com.android.internal.util.tesla.TeslaUtils;
 import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.utils.du.ActionHandler;
 import com.android.internal.utils.du.DUSystemReceiver;
@@ -752,6 +753,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // use the same delay values as for screenshot
     private boolean mScreenrecordChordEnabled;
     private boolean mScreenrecordChordVolumeUpKeyConsumed;
+
+    // OmniSwitch recents enabled
+    private boolean mOmniSwitchRecents;
 
     /* The number of steps between min and max brightness */
     private static final int BRIGHTNESS_STEPS = 10;
@@ -2397,6 +2401,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             // pa pie
             mPieState = (Settings.System.getIntForUser(resolver,
                     Settings.System.PA_PIE_STATE, 0, UserHandle.USER_CURRENT) == 1);
+
+            mOmniSwitchRecents = (Settings.System.getIntForUser(resolver,
+                    Settings.System.RECENTS_USE_OMNISWITCH, 0, UserHandle.USER_CURRENT) == 1);
 
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {
@@ -4178,10 +4185,20 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void showRecentApps(boolean triggeredFromAltTab, boolean fromHome) {
-        mPreloadedRecentApps = false; // preloading no longer needs to be canceled
-        StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
-        if (statusbar != null) {
-            statusbar.showRecentApps(triggeredFromAltTab, fromHome);
+        if (mOmniSwitchRecents) {
+            if (fromHome) {
+                Intent showIntent = new Intent(TeslaUtils.ACTION_RESTORE_HOME_STACK);
+                mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            } else {
+                Intent showIntent = new Intent(TeslaUtils.ACTION_TOGGLE_OVERLAY);
+                mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            }
+        } else {
+            mPreloadedRecentApps = false; // preloading no longer needs to be canceled
+            StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
+            if (statusbar != null) {
+                statusbar.showRecentApps(triggeredFromAltTab, fromHome);
+            }
         }
     }
 

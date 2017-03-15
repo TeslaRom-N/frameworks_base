@@ -112,7 +112,7 @@ public class WifiTile extends QSTile<QSTile.SignalState> {
 
     @Override
     protected void handleClick() {
-        boolean easyToggle = isWiFiEasyToggleEnabled();
+        boolean easyToggle = isEasyToggleEnabled();
         if (easyToggle) {
             mState.copyTo(mStateBeforeClick);
             MetricsLogger.action(mContext, getMetricsCategory(), !mState.value);
@@ -132,7 +132,7 @@ public class WifiTile extends QSTile<QSTile.SignalState> {
 
     @Override
     protected void handleLongClick() {
-        boolean easyToggle = isWiFiEasyToggleEnabled();
+        boolean easyToggle = isEasyToggleEnabled();
         if (easyToggle) {
             if (!mWifiController.canConfigWifi()) {
                 mHost.startActivityDismissingKeyguard(new Intent(Settings.ACTION_WIFI_SETTINGS));
@@ -213,9 +213,9 @@ public class WifiTile extends QSTile<QSTile.SignalState> {
         state.minimalAccessibilityClassName = Switch.class.getName();
     }
 
-    public boolean isWiFiEasyToggleEnabled() {
+    public boolean isEasyToggleEnabled() {
         return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.QS_WIFI_EASY_TOGGLE, 0) == 1;
+                Settings.Secure.QS_EASY_TOGGLE, 0) == 1;
     }
 
     @Override

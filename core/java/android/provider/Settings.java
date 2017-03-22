@@ -8068,16 +8068,22 @@ public final class Settings {
          * 4: Hide the battery status information
          * 5: Display the battery an icon in landscape mode
          * 6: Display the battery as plain text
+         * 7: Display the battery as a big circle
          * default: 0
          * @hide
          */
         public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
         /**
-         * Whether to sync the battery tile stile with the statusbar battery icon style
+         * Display style of the battery tile
+         * 0: Display the battery an icon in portrait mode
+         * 2: Display the battery as a circle
+         * 5: Display the battery an icon in landscape mode
+         * 7: Display the battery as a big circle
+         * default: 0
          * @hide
          */
-        public static final String STATUS_BAR_BATTERY_STYLE_TILE = "status_bar_battery_style_tile";
+        public static final String BATTERY_TILE_STYLE = "battery_tile_style";
 
         /**
          * battery icon color while charging
@@ -8401,7 +8407,7 @@ public final class Settings {
             LOCKSCREEN_QUICK_UNLOCK_CONTROL,
             STATUS_BAR_SHOW_BATTERY_PERCENT,
             STATUS_BAR_BATTERY_STYLE,
-            STATUS_BAR_BATTERY_STYLE_TILE
+            BATTERY_TILE_STYLE
         };
 
         /**

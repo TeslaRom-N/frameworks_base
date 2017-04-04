@@ -4623,6 +4623,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
         mNetworkController.onConfigurationChanged();
+        if (mSlimRecents != null) {
+            mSlimRecents.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override

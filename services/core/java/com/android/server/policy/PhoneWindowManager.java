@@ -757,6 +757,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // OmniSwitch recents enabled
     private boolean mOmniSwitchRecents;
 
+    // AOSP grid style recents
+    private boolean mAospRecentsGrid;
+
     /* The number of steps between min and max brightness */
     private static final int BRIGHTNESS_STEPS = 10;
 
@@ -2404,6 +2407,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             mOmniSwitchRecents = (Settings.System.getIntForUser(resolver,
                     Settings.System.RECENTS_USE_OMNISWITCH, 0, UserHandle.USER_CURRENT) == 1);
+
+            mAospRecentsGrid = (Settings.System.getIntForUser(resolver,
+                    Settings.System.RECENTS_USE_GRID, 0, UserHandle.USER_CURRENT) == 1);
 
         }
         synchronized (mWindowManagerFuncs.getWindowManagerLock()) {

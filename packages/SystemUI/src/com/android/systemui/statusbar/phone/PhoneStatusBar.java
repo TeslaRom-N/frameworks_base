@@ -2137,7 +2137,8 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                     | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
                     | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH
-                    | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    | WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+                    | WindowManager.LayoutParams.FLAG_SLIPPERY,
                 PixelFormat.TRANSLUCENT);
         // this will allow the navbar to run in an overlay on devices that support this
 /*        if (ActivityManager.isHighEndGfx()) {
@@ -3490,8 +3491,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
 
         mExpandedVisible = true;
-        if (mNavigationController.getBar() != null)
-            mNavigationController.getBar().setSlippery(true);
 
         // Expand the window to encompass the full screen in anticipation of the drag.
         // This is only possible to do atomically because the status bar is at the top of the screen!
@@ -3629,8 +3628,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
         mExpandedVisible = false;
 
-        if (mNavigationController.getBar() != null)
-            mNavigationController.getBar().setSlippery(false);
         visibilityChanged(false);
 
         // Shrink the window to the size of the status bar only

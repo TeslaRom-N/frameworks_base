@@ -1992,6 +1992,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
     };
 
+    private View.OnLongClickListener mLongPressBackListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            return handleLongPressBack();
+        }
+    };
+
     @Override
     protected void toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
         boolean isInLockTaskMode = false;
@@ -5832,6 +5839,22 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     public void onScreenTurnedOn() {
         mScreenTurningOn = false;
         mDozeScrimController.onScreenTurnedOn();
+    }
+
+    /**
+     * Handles long press for back button. This exits screen pinning.
+     */
+    private boolean handleLongPressBack() {
+        try {
+            IActivityManager activityManager = ActivityManagerNative.getDefault();
+            if (activityManager.isInLockTaskMode()) {
+                activityManager.stopSystemLockTaskMode();
+                return true;
+            }
+        } catch (RemoteException e) {
+            Log.d(TAG, "Unable to reach activity manager", e);
+        }
+        return false;
     }
 
     /**

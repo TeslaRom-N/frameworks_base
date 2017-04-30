@@ -79,4 +79,7 @@
     <dimen name="navbar_single_hand_mode_horizontal_threshhold">90dp</dimen>
     <dimen name="navbar_single_hand_mode_vertical_threshhold">48dp</dimen>
 
+    <!-- Recents task locking button -->
+    <dimen name="recents_task_view_header_lock_button_padding">44dp</dimen>
+
 </resources>

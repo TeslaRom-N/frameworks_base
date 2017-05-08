@@ -26,9 +26,6 @@
     <color name="fab_color">@*android:color/material_deep_teal_500</color>
     <color name="floating_action_button_icon_color">#ffffff</color>
 
-    <!-- Status bar battery level text color -->
-    <color name="status_bar_battery_level_text_color">#ffffff</color>
-
     <!-- Battery charging color -->
     <color name="system_primary_color">@*android:color/material_blue_grey_900</color>
 
@@ -55,5 +52,4 @@
     <!-- OmniJaws detailed view temperature text -->
     <color name="omni_jaws_detailed_temperature_color">@android:color/white</color>
 
-    <color name="batterymeter_frame_color_darkintensity">@color/dark_mode_icon_color_dual_tone_background</color>
 </resources>

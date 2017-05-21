@@ -696,6 +696,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Behavior of Back button while in-call and screen on
     int mIncallBackBehavior;
 
+    // Behavior of Home button while in-call and screen on
+    boolean mIncallHomeBehavior;
+
     // The volume key answer
     boolean mVolumeAnswer;
 
@@ -1004,6 +1007,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PA_PIE_STATE), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ALLOW_INCALL_HOME), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2401,6 +2407,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mVolumeAnswer = (Settings.System.getIntForUser(resolver,
                     Settings.System.ANSWER_VOLUME_BUTTON_BEHAVIOR_ANSWER, 0, UserHandle.USER_CURRENT) == 1);
 
+            mIncallHomeBehavior = (Settings.System.getIntForUser(resolver,
+                    Settings.System.ALLOW_INCALL_HOME, 1, UserHandle.USER_CURRENT) == 1);
+
             // pa pie
             mPieState = (Settings.System.getIntForUser(resolver,
                     Settings.System.PA_PIE_STATE, 0, UserHandle.USER_CURRENT) == 1);
@@ -3580,6 +3589,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Log.i(TAG, "Ignoring HOME; event canceled.");
                     return -1;
                 }
+
+                // If an incoming call is ringing and mIncallHomeBehavior=false, HOME is totally disabled.
+                TelecomManager telecomManager = getTelecommService();
+                if (telecomManager != null && telecomManager.isRinging()
+                        && !mIncallHomeBehavior) {
+                      Log.i(TAG, "Ignoring HOME; there's a ringing incoming call.");
+                      return -1;
+                  }
 
                 // Delay handling home if a double-tap is possible.
                 if (mDoubleTapOnHomeBehavior != DOUBLE_TAP_HOME_NOTHING) {

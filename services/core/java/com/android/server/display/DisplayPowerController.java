@@ -1293,7 +1293,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     }
 
     public void updateCustomBrightnessDozeValue(int value) {
-        mScreenBrightnessDozeConfig = MathUtils.constrain(value, PowerManager.BRIGHTNESS_OFF, PowerManager.BRIGHTNESS_ON);
+        mScreenBrightnessDozeConfig = clampAbsoluteBrightness(value);
     }
 
     public void enableAutoDozeBrightness(boolean enable) {

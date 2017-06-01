@@ -24,6 +24,9 @@
     <!-- Notification action button -->
     <color name="notification_action_color_filter">#9F9F9F</color>
 
+    <color name="notification_action_list">#000000</color>
+    <color name="notification_material_background_color">#ff000000</color>
+
     <!-- System - Accents -->
  	<color name="accent_material_light">#33b5e5</color>
  	<color name="accent_material_dark">#33b5e5</color>

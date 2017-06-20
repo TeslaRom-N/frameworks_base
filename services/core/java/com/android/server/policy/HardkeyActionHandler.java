@@ -110,6 +110,7 @@ public class HardkeyActionHandler {
 //    private PowerManager mPm;
     private Context mContext;
     private boolean mHwKeysDisabled = false;
+    private int mHwKeysBackLightVal;
 
     public HardkeyActionHandler(Context context, Handler handler) {
         mContext = context;
@@ -669,6 +670,9 @@ public class HardkeyActionHandler {
             resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Secure.HARDWAREKEYS_BACKLIGHT_VAL), false, this,
+                    UserHandle.USER_ALL);
 
             updateKeyAssignments();
         }
@@ -685,6 +689,10 @@ public class HardkeyActionHandler {
             mHwKeysDisabled = Settings.Secure.getIntForUser(cr,
                     Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
                     UserHandle.USER_CURRENT) != 0;
+
+            mHwKeysBackLightVal = Settings.Secure.getIntForUser(cr,
+                    Settings.Secure.HARDWAREKEYS_BACKLIGHT_VAL, 255,
+                    UserHandle.USER_CURRENT);
 
             final boolean hasMenu = (mDeviceHardwareKeys & KEY_MASK_MENU) != 0;
             final boolean hasHome = (mDeviceHardwareKeys & KEY_MASK_HOME) != 0;

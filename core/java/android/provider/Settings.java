@@ -7863,6 +7863,12 @@ public final class Settings {
         public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
 
         /**
+         * Backlight on hw buttons - 0-255
+         * @hide
+         */
+        public static final String HARDWAREKEYS_BACKLIGHT_VAL = "hardware_keys_light_val";
+
+        /**
          * The current night mode that has been selected by the user.  Owned
          * and controlled by UiModeManagerService.  Constants are as per
          * UiModeManager.

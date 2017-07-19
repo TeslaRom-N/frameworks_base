@@ -522,6 +522,9 @@ public final class PowerManagerService extends SystemService
     // overrule and disable brightness for buttons
     private boolean mHardwareKeysDisable = false;
 
+    // brightness for buttons
+    private int mHwKeysBackLightVal;
+
     // Set of app ids that we will always respect the wake locks for.
     int[] mDeviceIdleWhitelist = new int[0];
 
@@ -741,6 +744,9 @@ public final class PowerManagerService extends SystemService
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.HARDWARE_KEYS_DISABLE),
                     false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.HARDWAREKEYS_BACKLIGHT_VAL),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.PROXIMITY_ON_WAKE),
                     false, mSettingsObserver, UserHandle.USER_ALL);
@@ -916,6 +922,10 @@ public final class PowerManagerService extends SystemService
         mHardwareKeysDisable = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
                 UserHandle.USER_CURRENT) != 0;
+
+        mHwKeysBackLightVal = Settings.Secure.getIntForUser(resolver,
+                Settings.Secure.HARDWAREKEYS_BACKLIGHT_VAL, 255,
+                UserHandle.USER_CURRENT);
 
         mDirty |= DIRTY_SETTINGS;
 
@@ -1866,7 +1876,10 @@ public final class PowerManagerService extends SystemService
                                 buttonBrightness = 0;
                                 keyboardBrightness = 0;
                             } else {
-                            if (mButtonBrightnessOverrideFromWindowManager >= 0) {
+                            if (mHwKeysBackLightVal >= 0) {
+                                buttonBrightness = mHwKeysBackLightVal;
+                                keyboardBrightness = mHwKeysBackLightVal;
+                            } else if (mButtonBrightnessOverrideFromWindowManager >= 0) {
                                 buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
                                 keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
                             } else {

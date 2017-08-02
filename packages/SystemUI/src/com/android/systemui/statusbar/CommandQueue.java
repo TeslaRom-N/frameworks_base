@@ -82,6 +82,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_TOGGLE_LAST_APP               = 36 << MSG_SHIFT;
     private static final int MSG_TOGGLE_KILL_APP               = 37 << MSG_SHIFT;
     private static final int MSG_TOGGLE_SCREENSHOT             = 38 << MSG_SHIFT;
+    private static final int MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED  = 39 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -139,6 +140,7 @@ public class CommandQueue extends IStatusBar.Stub {
         void clickTile(ComponentName tile);
         void handleSystemNavigationKey(int arg1);
         void screenPinningStateChanged(boolean enabled);
+        void leftInLandscapeChanged(boolean isLeft);
         public void toggleLastApp();
         public void toggleKillApp();
         public void toggleScreenshot();
@@ -147,6 +149,14 @@ public class CommandQueue extends IStatusBar.Stub {
 
     public CommandQueue(Callbacks callbacks) {
         mCallbacks = callbacks;
+    }
+
+    public void leftInLandscapeChanged(boolean isLeft) {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED);
+            mHandler.obtainMessage(MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED,
+                    isLeft ? 1 : 0, 0, null).sendToTarget();
+        }
     }
 
     public void screenPinningStateChanged(boolean enabled) {
@@ -582,6 +592,9 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_TOGGLE_SCREENSHOT:
                     mCallbacks.toggleScreenshot();
+                    break;
+                case MSG_LEFT_IN_LANDSCAPE_STATE_CHANGED:
+                    mCallbacks.leftInLandscapeChanged(msg.arg1 != 0);
                     break;
             }
         }

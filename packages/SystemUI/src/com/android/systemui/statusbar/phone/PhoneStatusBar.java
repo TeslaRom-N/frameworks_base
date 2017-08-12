@@ -575,18 +575,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         }
     };
 
-    private DUSystemReceiver mDUReceiver = new DUSystemReceiver() {
-        @Override
-        protected void onSecureReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (TextUtils.equals(ActionHandler.INTENT_TOGGLE_FLASHLIGHT, action)) {
-                if (mFlashlightController.isAvailable()) {
-                    mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
-                }
-            }
-        }
-    };
-
     private void updateWeatherTextState(String temp, int size, int font ,int color) {
         if (mWeatherTempState == 0 || TextUtils.isEmpty(temp)) {
             mWeatherTempView.setVisibility(View.GONE);
@@ -1631,11 +1619,6 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         context.registerReceiverAsUser(mDemoReceiver, UserHandle.ALL, demoFilter,
                 android.Manifest.permission.DUMP, null);
 
-        // flashlight action target for toggle
-        IntentFilter flashlightFilter = new IntentFilter();
-        flashlightFilter.addAction(ActionHandler.INTENT_TOGGLE_FLASHLIGHT);
-        context.registerReceiver(mDUReceiver, flashlightFilter);
-
         // listen for USER_SETUP_COMPLETE setting (per-user)
         resetUserSetupObserver();
 
@@ -2187,6 +2170,14 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
     public void leftInLandscapeChanged(boolean isLeft) {
         super.leftInLandscapeChanged(isLeft);
         mNavigationController.leftInLandscapeChanged(isLeft);
+    }
+
+    @Override
+    public void toggleFlashlight() {
+        super.toggleFlashlight();
+        if (mFlashlightController.isAvailable()) {
+            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+        }
     }
 
     @Override
